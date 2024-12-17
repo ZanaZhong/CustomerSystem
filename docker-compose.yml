@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+
+  go:
+    image: golang:1.21
+    volumes:
+      - ./code:/go/src/app
+    ports:
+      - "8080:8080"
+    working_dir: /go/src/app
+    command: tail -f /dev/null
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb:10.4
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: pretest
+      MARIADB_USER: test
+      MARIADB_PASSWORD: test
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mariadb_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      UPLOAD_LIMIT: 300M
+    ports:
+      - "9000:80"
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./code/backend:/app
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development
+    depends_on:
+      - mariadb
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend
+    ports:
+      - "3000:8080" # Vue.js 預設開發伺服器是 8080，但對外暴露為 3000
+    volumes:
+      - ./code/frontend:/app
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb_data:

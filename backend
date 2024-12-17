@@ -1,0 +1,18 @@
+# Docker file backend
+FROM python:3.8.5
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY code/backend/requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application files
+COPY code/backend/ /app
+
+# Expose Flask port
+EXPOSE 8888
+
+# Start Flask server
+CMD ["flask", "run", "--host=0.0.0.0", "--port=8888"]
