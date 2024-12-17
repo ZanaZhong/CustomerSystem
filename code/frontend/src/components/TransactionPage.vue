@@ -37,7 +37,7 @@
       <table class="table table-bordered table-striped customer-table" >
         <thead>
           <tr>
-            <th>客戶</th>
+            <th>客戶ID</th>
             <th>交易日期</th>
             <th>金額</th>
           </tr>

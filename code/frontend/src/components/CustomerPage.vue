@@ -139,7 +139,7 @@ export default {
       this.editingCustomer = { ...customer };
     },
 
-    async submitUpdate(index) {
+    async submitUpdate() {
       this.isUpdating = true;
       try {
         await axios.put(
