@@ -51,7 +51,7 @@ def get_customers():
     #     })
     one_year_ago = datetime.utcnow() - timedelta(days=365)
     
-    # 使用 JOIN 合併查詢
+    # 使用 JOIN 
     result = db.session.query(
         Customer.id, 
         Customer.name, 
@@ -66,7 +66,6 @@ def get_customers():
         Customer.id
     ).all()
 
-    # 組織資料返回
     data = []
     for row in result:
         data.append({
@@ -143,5 +142,4 @@ def get_transactions(customer_id):
     return jsonify(data)
 
 if __name__ == '__main__':
-    # db.create_all()  # 建立資料表
     app.run(host='0.0.0.0', port=8888)
