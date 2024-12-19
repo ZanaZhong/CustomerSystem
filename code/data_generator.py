@@ -98,8 +98,6 @@ def create_transactions(cursor, count=5000):
         customer = random.choice(customers)
         # get customer id & create date
         customer_id = customer[0]
-        if customer_id == 1001:
-            print(customer)
         customer_created_at = customer[1]
         amount = round(random.uniform(10, 1000), 2)
         borrow_fee = amount * (round(random.uniform(0, 1), 2))
@@ -121,14 +119,7 @@ def create_transactions(cursor, count=5000):
     # Calculate the transaction_count for each customer (based on the sorted transaction dates)
     transaction_counts = {}
     for tx in transactions:
-        # customer_id = tx["customer_id"]
-        # if customer_id not in transaction_counts:
-        #     transaction_counts[customer_id] = 0
-        # transaction_counts[customer_id] += 1
-        # tx["transaction_count"] = transaction_counts[customer_id]
         customer_id = tx["customer_id"]
-        if customer_id == 1001:
-            print(str(customer) + "?????")
         if customer_id not in transaction_counts:
             transaction_counts[customer_id] = 0
         transaction_counts[customer_id] += 1

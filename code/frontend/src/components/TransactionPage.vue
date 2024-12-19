@@ -72,7 +72,7 @@ export default {
     this.fetchCustomersName();
   },
   methods: {
-    // 獲取所有客戶資料
+    // fetch all customers' names
     async fetchCustomersName() {
       try {
         const response = await axios.get('http://localhost:8888/customer_names');
@@ -82,7 +82,7 @@ export default {
       }
     },
 
-    // 查詢指定客戶及時間範圍的交易紀錄
+    // search customer's transactions by time range
     async fetchCustomerTransactions() {
       try {
         const response = await axios.get(`http://localhost:8888/transactions/${this.selectedCustomerId}`, {
@@ -91,7 +91,7 @@ export default {
             endDate: this.endDate,
           },
         });
-        this.transactions = response.data; // 使用正確格式解析資料
+        this.transactions = response.data;
       } catch (error) {
         alert(`查詢失敗: ${error.response?.data?.error || '伺服器錯誤'}`);
         console.error('查詢交易紀錄失敗', error);
